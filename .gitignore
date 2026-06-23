@@ -1,0 +1,65 @@
+# This .gitignore is for Unity projects
+# Recommended by GitHub's Unity .gitignore template
+
+# ============= #
+# Unity generated #
+# ============= #
+Temp/
+[Ll]ibrary/
+[Ll]ogs/
+[Mm]emoryCaptures/
+[Pp]rofile[Pp]roject([Dd]ata)?/
+[Pp]rofiler[Cc]aptures/
+[Uu]ser[Ss]ettings/
+sysinfo.txt
+
+# ============================================= #
+# Visual Studio / MonoDevelop / Rider generated #
+# ============================================= #
+[Oo]bj/
+[Bb]in/
+[Nn]uget/
+*.suo
+*.user
+*.userprefs
+*.csproj
+*.sln
+*.unityproj
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# ============== #
+# JetBrains Rider #
+# ============== #
+.idea/
+*.sln.DotSettings.user
+
+# ============ #
+# macOS #
+# ============ #
+.DS_Store
+*.swp
+*.swo
+
+# ============== #
+# Windows #
+# ============== #
+Thumbs.db
+Desktop.ini
+
+# ============== #
+# Builds #
+# ============== #
+[Bb]uild/
+[Bb]uilds/
+[Dd]ocker/
+
+# ============== #
+# Plugins #
+# ============== #
+Assets/Plugins/Editor/**/.gitkeep
