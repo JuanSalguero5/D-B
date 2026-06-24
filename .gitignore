@@ -16,6 +16,7 @@ sysinfo.txt
 # ============================================= #
 # Visual Studio / MonoDevelop / Rider generated #
 # ============================================= #
+.vs/
 [Oo]bj/
 [Bb]in/
 [Nn]uget/

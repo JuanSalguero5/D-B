@@ -1,0 +1,48 @@
+==========================================================================================
+                      SPRINT-BACKLOG DE LA ITERACIÓN - SPRINT #4
+   EVIDENCIA: GA8-220501088-AA1-EV01 - BATERÍA DE PRUEBAS AUTOMATIZADAS (PLAYMODE)
+==========================================================================================
+
+[PROYECTO]: Rhythm Conductor / Arcade Rítmico
+[FECHA DE COMPILACIÓN]: 23 de Junio de 2026
+[ESTADO GLOBAL DE LA BATERÍA]: PROCESADO (100% Passed tras corrección de PlayerHealth)
+
+------------------------------------------------------------------------------------------
+ID     | TAREA DEL SPRINT-BACKLOG                 | ESTIMACIÓN | ESTADO | CRITERIO DE ACEPTACIÓN
+------------------------------------------------------------------------------------------
+TS-01  | Configuración del entorno de Testing y  | 12 Horas   | DONE   | La ventana Test Runner reconoce 
+       | ensamblado de referencias modulares      |            |        | el bloque 'MainGame' sin errores.
+       | mediante 'MainGame.asmdef' en Unity 6.  |            |        |
+------------------------------------------------------------------------------------------
+TS-02  | Diseño y codificación de pruebas         | 28 Horas   | DONE   | Comprobación exitosa en verde de 
+       | automatizadas para las constantes        |            |        | los métodos lógicos de reducción 
+       | vitales del chasis ('PlayerHealth').     |            |        | de daño y reset estructural.
+------------------------------------------------------------------------------------------
+TS-03  | Implementación de pruebas unitarias para | 32 Horas   | DONE   | Verificación de límites numéricos 
+       | la gestión de multiplicadores de combo   |            |        | de las anillas (tope estricto de 
+       | y desborde rítmico en 'GameManager'.     |            |        | 10x de puntaje acumulado).
+------------------------------------------------------------------------------------------
+TS-04  | Ejecución general de la batería de       | 24 Horas   | DONE   | Reporte técnico consolidado en XML 
+       | pruebas, depuración de fallos lógicos y |            |        | con el 100% de los casos de test 
+       | exportación del reporte final al SENA.   |            |        | en estado "Passed".
+------------------------------------------------------------------------------------------
+
+==========================================================================================
+                     MÉTRICAS TÉCNICAS E HISTORIAL DE EJECUCIÓN
+==========================================================================================
+
+1. [VERIFICACIÓN INICIAL]: 
+   - Fallo crítico detectado en 'PlayerHealth_RecibeDano_ReduceSaludCorrectamente'.
+   - Diagnóstico: El método 'TakeDamage' retenía la salud en 100/100 en lugar de mitigar a 85.
+
+2. [ACCIÓN CORRECTIVA]: 
+   - Ajuste de la operación aritmética de sustracción directa en 'PlayerHealth.cs' asignando 'currentHealth -= damage;'.
+
+3. [VERIFICACIÓN FINAL]:
+   - Test 1: PlayerHealth_RecibeDano_ReduceSaludCorrectamente -> [ PASSED ]
+   - Test 2: PlayerHealth_ResetearSalud_DevuelveVidaAlMaximo -> [ PASSED ]
+   - Test 3: GameManager_MultiplicadorCombo_NoSuperaTopeMaximo -> [ PASSED ]
+
+==========================================================================================
+                 FIN DEL REPORTE DE CONTROL DE CALIDAD (QA) - SENA
+==========================================================================================
