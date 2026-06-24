@@ -3,7 +3,7 @@
   "WorkspaceRootPath": "C:\\Users\\USER.RACCOON05.000\\Documents\\D \u0026 B\\D \u0026 B\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{6B36E57E-8D74-F7C5-A0CE-82CC8C99FB9C}|MainGame.csproj|C:\\Users\\USER.RACCOON05.000\\Documents\\D \u0026 B\\D \u0026 B\\assets\\cs\\playerhealth.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{6B36E57E-8D74-F7C5-A0CE-82CC8C99FB9C}|MainGame.csproj|c:\\users\\user.raccoon05.000\\documents\\d \u0026 b\\d \u0026 b\\assets\\cs\\playerhealth.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6B36E57E-8D74-F7C5-A0CE-82CC8C99FB9C}|MainGame.csproj|solutionrelative:assets\\cs\\playerhealth.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -19,7 +19,7 @@
       "RelativeMoniker": "D:0:0:{6B36E57E-8D74-F7C5-A0CE-82CC8C99FB9C}|MainGame.csproj|solutionrelative:assets\\cs\\re\\re_rythmring.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9232BFA1-1421-8C3B-DAC3-6E94EDD0C1EE}|Tests.csproj|c:\\users\\user.raccoon05.000\\documents\\d \u0026 b\\d \u0026 b\\assets\\tests\\rhythmgametests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9232BFA1-1421-8C3B-DAC3-6E94EDD0C1EE}|Tests.csproj|C:\\Users\\USER.RACCOON05.000\\Documents\\D \u0026 B\\D \u0026 B\\assets\\tests\\rhythmgametests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9232BFA1-1421-8C3B-DAC3-6E94EDD0C1EE}|Tests.csproj|solutionrelative:assets\\tests\\rhythmgametests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -62,8 +62,7 @@
               "RelativeToolTip": "Assets\\Tests\\RhythmGameTests.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAEYAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-24T03:26:46.426Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-24T03:26:46.426Z"
             },
             {
               "$type": "Document",
@@ -75,8 +74,7 @@
               "RelativeToolTip": "Assets\\Cs\\Re\\RE_RythmRing.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAHMAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-24T02:32:11.624Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-24T02:32:11.624Z"
             },
             {
               "$type": "Document",
@@ -88,8 +86,7 @@
               "RelativeToolTip": "Assets\\Cs\\Enemy\\IA_EnemyRacer.cs",
               "ViewState": "AgIAAEUAAAAAAAAAAAAQwH8AAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-24T02:19:44.05Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-24T02:19:44.05Z"
             },
             {
               "$type": "Document",
@@ -101,8 +98,7 @@
               "RelativeToolTip": "Assets\\Cs\\RythmRamp.cs",
               "ViewState": "AgIAABYAAAAAAAAAAAAuwF8AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-23T19:31:21.989Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-23T19:31:21.989Z"
             },
             {
               "$type": "Document",

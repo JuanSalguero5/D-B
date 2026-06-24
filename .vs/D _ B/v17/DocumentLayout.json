@@ -3,12 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\USER.RACCOON05.000\\Documents\\D \u0026 B\\D \u0026 B\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{6B36E57E-8D74-F7C5-A0CE-82CC8C99FB9C}|MainGame.csproj|c:\\users\\user.raccoon05.000\\documents\\d \u0026 b\\d \u0026 b\\assets\\cs\\playerhealth.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6B36E57E-8D74-F7C5-A0CE-82CC8C99FB9C}|MainGame.csproj|solutionrelative:assets\\cs\\playerhealth.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6B36E57E-8D74-F7C5-A0CE-82CC8C99FB9C}|MainGame.csproj|C:\\Users\\USER.RACCOON05.000\\Documents\\D \u0026 B\\D \u0026 B\\assets\\cs\\simplefluiddrive.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6B36E57E-8D74-F7C5-A0CE-82CC8C99FB9C}|MainGame.csproj|solutionrelative:assets\\cs\\simplefluiddrive.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6B36E57E-8D74-F7C5-A0CE-82CC8C99FB9C}|MainGame.csproj|C:\\Users\\USER.RACCOON05.000\\Documents\\D \u0026 B\\D \u0026 B\\assets\\cs\\rythmramp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6B36E57E-8D74-F7C5-A0CE-82CC8C99FB9C}|MainGame.csproj|solutionrelative:assets\\cs\\rythmramp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6B36E57E-8D74-F7C5-A0CE-82CC8C99FB9C}|MainGame.csproj|C:\\Users\\USER.RACCOON05.000\\Documents\\D \u0026 B\\D \u0026 B\\assets\\cs\\playerrhythmbehavior.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6B36E57E-8D74-F7C5-A0CE-82CC8C99FB9C}|MainGame.csproj|solutionrelative:assets\\cs\\playerrhythmbehavior.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6B36E57E-8D74-F7C5-A0CE-82CC8C99FB9C}|MainGame.csproj|c:\\users\\user.raccoon05.000\\documents\\d \u0026 b\\d \u0026 b\\assets\\cs\\smoothcamera.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6B36E57E-8D74-F7C5-A0CE-82CC8C99FB9C}|MainGame.csproj|solutionrelative:assets\\cs\\smoothcamera.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6B36E57E-8D74-F7C5-A0CE-82CC8C99FB9C}|MainGame.csproj|c:\\users\\user.raccoon05.000\\documents\\d \u0026 b\\d \u0026 b\\assets\\cs\\playerhealth.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6B36E57E-8D74-F7C5-A0CE-82CC8C99FB9C}|MainGame.csproj|solutionrelative:assets\\cs\\playerhealth.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6B36E57E-8D74-F7C5-A0CE-82CC8C99FB9C}|MainGame.csproj|C:\\Users\\USER.RACCOON05.000\\Documents\\D \u0026 B\\D \u0026 B\\assets\\cs\\enemy\\ia_enemyracer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -17,10 +25,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{6B36E57E-8D74-F7C5-A0CE-82CC8C99FB9C}|MainGame.csproj|C:\\Users\\USER.RACCOON05.000\\Documents\\D \u0026 B\\D \u0026 B\\assets\\cs\\re\\re_rythmring.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6B36E57E-8D74-F7C5-A0CE-82CC8C99FB9C}|MainGame.csproj|solutionrelative:assets\\cs\\re\\re_rythmring.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9232BFA1-1421-8C3B-DAC3-6E94EDD0C1EE}|Tests.csproj|C:\\Users\\USER.RACCOON05.000\\Documents\\D \u0026 B\\D \u0026 B\\assets\\tests\\rhythmgametests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9232BFA1-1421-8C3B-DAC3-6E94EDD0C1EE}|Tests.csproj|solutionrelative:assets\\tests\\rhythmgametests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6B36E57E-8D74-F7C5-A0CE-82CC8C99FB9C}|MainGame.csproj|C:\\Users\\USER.RACCOON05.000\\Documents\\D \u0026 B\\D \u0026 B\\assets\\cs\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -33,14 +37,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{6B36E57E-8D74-F7C5-A0CE-82CC8C99FB9C}|MainGame.csproj|C:\\Users\\USER.RACCOON05.000\\Documents\\D \u0026 B\\D \u0026 B\\assets\\cs\\dynamicobstacle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6B36E57E-8D74-F7C5-A0CE-82CC8C99FB9C}|MainGame.csproj|solutionrelative:assets\\cs\\dynamicobstacle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6B36E57E-8D74-F7C5-A0CE-82CC8C99FB9C}|MainGame.csproj|C:\\Users\\USER.RACCOON05.000\\Documents\\D \u0026 B\\D \u0026 B\\assets\\cs\\playerrhythmbehavior.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6B36E57E-8D74-F7C5-A0CE-82CC8C99FB9C}|MainGame.csproj|solutionrelative:assets\\cs\\playerrhythmbehavior.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6B36E57E-8D74-F7C5-A0CE-82CC8C99FB9C}|MainGame.csproj|C:\\Users\\USER.RACCOON05.000\\Documents\\D \u0026 B\\D \u0026 B\\assets\\cs\\simplefluiddrive.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6B36E57E-8D74-F7C5-A0CE-82CC8C99FB9C}|MainGame.csproj|solutionrelative:assets\\cs\\simplefluiddrive.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -50,23 +46,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "RhythmGameTests.cs",
-              "DocumentMoniker": "C:\\Users\\USER.RACCOON05.000\\Documents\\D \u0026 B\\D \u0026 B\\Assets\\Tests\\RhythmGameTests.cs",
-              "RelativeDocumentMoniker": "Assets\\Tests\\RhythmGameTests.cs",
-              "ToolTip": "C:\\Users\\USER.RACCOON05.000\\Documents\\D \u0026 B\\D \u0026 B\\Assets\\Tests\\RhythmGameTests.cs",
-              "RelativeToolTip": "Assets\\Tests\\RhythmGameTests.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEYAAAABAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "SmoothCamera.cs",
+              "DocumentMoniker": "C:\\Users\\USER.RACCOON05.000\\Documents\\D \u0026 B\\D \u0026 B\\Assets\\Cs\\SmoothCamera.cs",
+              "RelativeDocumentMoniker": "Assets\\Cs\\SmoothCamera.cs",
+              "ToolTip": "C:\\Users\\USER.RACCOON05.000\\Documents\\D \u0026 B\\D \u0026 B\\Assets\\Cs\\SmoothCamera.cs",
+              "RelativeToolTip": "Assets\\Cs\\SmoothCamera.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACwAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-24T03:26:46.426Z"
+              "WhenOpened": "2026-06-24T04:24:33.994Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "RE_RythmRing.cs",
               "DocumentMoniker": "C:\\Users\\USER.RACCOON05.000\\Documents\\D \u0026 B\\D \u0026 B\\Assets\\Cs\\Re\\RE_RythmRing.cs",
               "RelativeDocumentMoniker": "Assets\\Cs\\Re\\RE_RythmRing.cs",
@@ -78,7 +75,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "IA_EnemyRacer.cs",
               "DocumentMoniker": "C:\\Users\\USER.RACCOON05.000\\Documents\\D \u0026 B\\D \u0026 B\\Assets\\Cs\\Enemy\\IA_EnemyRacer.cs",
               "RelativeDocumentMoniker": "Assets\\Cs\\Enemy\\IA_EnemyRacer.cs",
@@ -90,19 +87,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "RythmRamp.cs",
-              "DocumentMoniker": "C:\\Users\\USER.RACCOON05.000\\Documents\\D \u0026 B\\D \u0026 B\\Assets\\Cs\\RythmRamp.cs",
-              "RelativeDocumentMoniker": "Assets\\Cs\\RythmRamp.cs",
-              "ToolTip": "C:\\Users\\USER.RACCOON05.000\\Documents\\D \u0026 B\\D \u0026 B\\Assets\\Cs\\RythmRamp.cs",
-              "RelativeToolTip": "Assets\\Cs\\RythmRamp.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAuwF8AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-23T19:31:21.989Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "PlayerHealth.cs",
               "DocumentMoniker": "C:\\Users\\USER.RACCOON05.000\\Documents\\D \u0026 B\\D \u0026 B\\Assets\\Cs\\PlayerHealth.cs",
               "RelativeDocumentMoniker": "Assets\\Cs\\PlayerHealth.cs",
@@ -115,7 +100,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "ObstacleDamage.cs",
               "DocumentMoniker": "C:\\Users\\USER.RACCOON05.000\\Documents\\D \u0026 B\\D \u0026 B\\Assets\\Cs\\ObstacleDamage.cs",
               "RelativeDocumentMoniker": "Assets\\Cs\\ObstacleDamage.cs",
@@ -127,7 +112,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "DynamicObstacle.cs",
               "DocumentMoniker": "C:\\Users\\USER.RACCOON05.000\\Documents\\D \u0026 B\\D \u0026 B\\Assets\\Cs\\DynamicObstacle.cs",
               "RelativeDocumentMoniker": "Assets\\Cs\\DynamicObstacle.cs",
@@ -139,31 +124,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 1,
               "Title": "PlayerRhythmBehavior.cs",
               "DocumentMoniker": "C:\\Users\\USER.RACCOON05.000\\Documents\\D \u0026 B\\D \u0026 B\\Assets\\Cs\\PlayerRhythmBehavior.cs",
               "RelativeDocumentMoniker": "Assets\\Cs\\PlayerRhythmBehavior.cs",
               "ToolTip": "C:\\Users\\USER.RACCOON05.000\\Documents\\D \u0026 B\\D \u0026 B\\Assets\\Cs\\PlayerRhythmBehavior.cs",
               "RelativeToolTip": "Assets\\Cs\\PlayerRhythmBehavior.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADkAAAA5AAAAAAAAAA==",
+              "ViewState": "AgIAACQAAAAAAAAAAAA5wDkAAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-23T18:37:49.465Z"
+              "WhenOpened": "2026-06-23T18:37:49.465Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 0,
               "Title": "SimpleFluidDrive.cs",
               "DocumentMoniker": "C:\\Users\\USER.RACCOON05.000\\Documents\\D \u0026 B\\D \u0026 B\\Assets\\Cs\\SimpleFluidDrive.cs",
               "RelativeDocumentMoniker": "Assets\\Cs\\SimpleFluidDrive.cs",
               "ToolTip": "C:\\Users\\USER.RACCOON05.000\\Documents\\D \u0026 B\\D \u0026 B\\Assets\\Cs\\SimpleFluidDrive.cs",
               "RelativeToolTip": "Assets\\Cs\\SimpleFluidDrive.cs",
-              "ViewState": "AgIAACcAAAAAAAAAAAAcwF0AAAA4AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-23T04:07:51.152Z"
+              "WhenOpened": "2026-06-23T04:07:51.152Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "GameManager.cs",
               "DocumentMoniker": "C:\\Users\\USER.RACCOON05.000\\Documents\\D \u0026 B\\D \u0026 B\\Assets\\Cs\\GameManager.cs",
               "RelativeDocumentMoniker": "Assets\\Cs\\GameManager.cs",
