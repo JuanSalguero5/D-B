@@ -1,51 +1,15 @@
 ﻿using UnityEngine;
-using TMPro; // Requerido para manipular el texto flotante
+using TMPro;
 
-/// <summary>
-/// NOMBRE DEL COMPORTAMIENTO: RE_RhythmRing (Reto de Anillas con Feedback Dinámico de Color)
-/// CASO DE USO: El jugador recolecta una anilla; el script calcula el color correspondiente al rango 
-///              del nuevo combo (Verde, Azul o Morado) y actualiza un texto flotante antes de reposicionarse.
-/// DATOS DE ENTRADA:
-///   - floatingComboText (TextMeshPro): Componente de texto flotante en la anilla.
-///   - GameManager.Instance.scoreMultiplier (int): Multiplicador actual del juego.
-/// DATOS DE SALIDA:
-///   - Modificación cromática y de cadena del texto flotante en la escena 3D.
-/// PRECONDICIÓN:
-///   - El jugador debe activar el Trigger de la anilla.
-/// </summary>
 [RequireComponent(typeof(Collider))]
 public class RE_RhythmRing : MonoBehaviour
 {
-    [Header("Configuración de Reto y Movimiento")]
-    public float minSpawnX = -6f;
-    public float maxSpawnX = 6f;
-    public float resetZPosition = 40f;
-    public float despawnZPosition = -10f;
-
     [Header("Feedback Visual Dinámico")]
-    [Tooltip("Arrastra aquí el TextMeshPro que flotará sobre la anilla")]
     public TextMeshPro floatingComboText;
 
-    private float currentSpeed = 30f;
-
-    void Update()
-    {
-        if (GameManager.Instance == null || GameManager.Instance.currentState != GameManager.GameState.Playing)
-            return;
-
-        SimpleFluidDrive playerDrive = Object.FindAnyObjectByType<SimpleFluidDrive>();
-        if (playerDrive != null)
-        {
-            currentSpeed = playerDrive.roadScrollSpeed;
-        }
-
-        transform.Translate(Vector3.back * currentSpeed * Time.deltaTime, Space.World);
-
-        if (transform.position.z < despawnZPosition)
-        {
-            PenalizarComboOPasarDeLargo();
-        }
-    }
+    [Header("Referencia Opcional")]
+    [Tooltip("Arrastra aquí la malla 3D/anillo visual para apagarlo de forma exacta sin romper el texto")]
+    public MeshRenderer mallaVisualAnilla;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -54,14 +18,32 @@ public class RE_RhythmRing : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            // 1. Notificar al GameManager para que aumente el combo global
             GameManager.Instance.AgregarAnillaCombo();
-
-            // 2. Mostrar el combo flotante antes de mover la anilla al fondo
             MostrarFeedbackFlotante();
 
-            // 3. Reciclar a la coordenada inicial
-            ReciclarAnilla();
+            if (RingPostProcess.Instance != null)
+            {
+                RingPostProcess.Instance.TriggerFeedback();
+            }
+
+            // 1. Apagamos el colisionador de inmediato para evitar dobles recolecciones
+            GetComponent<Collider>().enabled = false;
+
+            // 2. CORRECCIÓN FLUIDA: Intentamos apagar el MeshRenderer específico si está asignado
+            if (mallaVisualAnilla != null)
+            {
+                mallaVisualAnilla.enabled = false;
+            }
+            else
+            {
+                // Alternativa automática si no quieres arrastrar la referencia en el inspector:
+                // Busca un MeshRenderer en el objeto actual o en sus hijos y lo apaga
+                MeshRenderer mr = GetComponentInChildren<MeshRenderer>();
+                if (mr != null) mr.enabled = false;
+            }
+
+            // 3. El objeto completo (incluido el texto) se destruye en 1 segundo
+            Destroy(gameObject, 1f);
         }
     }
 
@@ -69,48 +51,18 @@ public class RE_RhythmRing : MonoBehaviour
     {
         if (floatingComboText != null)
         {
+            // Aseguramos que el objeto del texto esté activo por si acaso
+            floatingComboText.gameObject.SetActive(true);
+
             int multiplicadorActual = GameManager.Instance.scoreMultiplier;
             int comboActual = GameManager.Instance.currentComboCount;
 
-            // Definimos el texto (Ej: "+3 Combo! x2")
             floatingComboText.text = $"+{comboActual} Combo!\nx{multiplicadorActual}";
 
-            // Aplicamos las reglas de color solicitadas según el multiplicador
-            if (multiplicadorActual >= 2 && multiplicadorActual <= 4)
-            {
-                floatingComboText.color = Color.green; // Verde para 2x - 4x
-            }
-            else if (multiplicadorActual >= 5 && multiplicadorActual <= 7)
-            {
-                floatingComboText.color = new Color(0f, 0.5f, 1f); // Azul vibrante para 5x - 7x
-            }
-            else if (multiplicadorActual >= 8 && multiplicadorActual <= 10)
-            {
-                floatingComboText.color = new Color(0.6f, 0f, 1f); // Morado/Púrpura para 8x - 10x
-            }
-            else
-            {
-                floatingComboText.color = Color.white; // Blanco por defecto (1x)
-            }
+            if (multiplicadorActual >= 2 && multiplicadorActual <= 4) floatingComboText.color = Color.green;
+            else if (multiplicadorActual >= 5 && multiplicadorActual <= 7) floatingComboText.color = new Color(0f, 0.5f, 1f);
+            else if (multiplicadorActual >= 8 && multiplicadorActual <= 10) floatingComboText.color = new Color(0.6f, 0f, 1f);
+            else floatingComboText.color = Color.white;
         }
-    }
-
-    private void PenalizarComboOPasarDeLargo()
-    {
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.ResetearComboPorFallo();
-        }
-
-        // Si se pasa de largo, limpiamos el texto flotante para que no reaparezca con datos viejos
-        if (floatingComboText != null) floatingComboText.text = "";
-
-        ReciclarAnilla();
-    }
-
-    private void ReciclarAnilla()
-    {
-        float randomX = Random.Range(minSpawnX, maxSpawnX);
-        transform.position = new Vector3(randomX, transform.position.y, resetZPosition);
     }
 }

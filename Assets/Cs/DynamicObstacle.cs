@@ -1,58 +1,41 @@
 using UnityEngine;
 
-/// <summary>
-/// NOMBRE DEL COMPORTAMIENTO: DynamicObstacle (Controlador de Desplazamiento y Reciclaje de Obstáculos)
-/// CASO DE USO: Simular el avance del coche haciendo que los obstáculos se desplacen de forma síncrona en el eje Z 
-///              a la velocidad de la carretera, reposicionándolos aleatoriamente al frente al superar el límite visual trasero.
-/// DATOS DE ENTRADA: 
-///   - minSpawnX (float): Límite horizontal izquierdo para el reposicionamiento aleatorio.
-///   - maxSpawnX (float): Límite horizontal derecho para el reposicionamiento aleatorio.
-///   - resetZPosition (float): Coordenada Z de reaparición al frente de la pista.
-///   - despawnZPosition (float): Umbral límite en Z por detrás del jugador que activa el reciclaje.
-///   - playerDrive.roadScrollSpeed (float): Velocidad de la carretera leída en tiempo real.
-/// DATOS DE SALIDA: 
-///   - transform.position (Vector3): Nueva posición tridimensional del obstáculo en la escena.
-/// PRECONDICIÓN: 
-///   - El GameManager debe estar instanciado y en estado activo de juego (GameState.Playing).
-/// </summary>
 public class DynamicObstacle : MonoBehaviour
 {
-    [Header("Configuración del Obstáculo")]
-    public float minSpawnX = -6f;
-    public float maxSpawnX = 6f;
-    public float resetZPosition = 40f;
-    public float despawnZPosition = -10f;
+    [Header("Movimiento Lateral (Ping-Pong)")]
+    [Tooltip("Qué tan lejos se mueve a la izquierda y derecha desde su centro")]
+    public float amplitudMovimiento = 3f;
 
-    private float currentSpeed = 30f;
+    [Tooltip("Velocidad del vaivén. Sintonízala con los BPM de tu Drum and Bass")]
+    public float velocidadOscilacion = 5f;
 
-    /// <summary>
-    /// NOMBRE DEL COMPORTAMIENTO: Update (Ciclo Lógico por Cuadro)
-    /// CASO DE USO: Sincronizar frame a frame la velocidad de traslación del obstáculo con el escenario y validar sus límites de espacio.
-    /// DATOS DE ENTRADA: Time.deltaTime (Tiempo transcurrido entre fotogramas).
-    /// DATOS DE SALIDA: Modificación del vector de posición e interpolación aleatoria en X mediante Random.Range().
-    /// PRECONDICIÓN: Estado de juego activo en Playing.
-    /// </summary>
+    [Tooltip("Desfase de tiempo (útil si pones varios obstáculos seguidos para que no se muevan idénticos)")]
+    public float desfaseInicio = 0f;
+
+    private float posicionInicialLocalX;
+
+    void Start()
+    {
+        // Guardamos la X local en la que lo acomodaste en el prefab
+        posicionInicialLocalX = transform.localPosition.x;
+
+        // Si quieres que el desfase sea aleatorio por defecto, descomenta la siguiente línea:
+        // desfaseInicio = Random.Range(0f, 2f * Mathf.PI);
+    }
+
     void Update()
     {
-        // El obstáculo solo se mueve si el juego está activo
+        // El obstáculo solo oscila si el juego está activo
         if (GameManager.Instance == null || GameManager.Instance.currentState != GameManager.GameState.Playing)
             return;
 
-        SimpleFluidDrive playerDrive = Object.FindAnyObjectByType<SimpleFluidDrive>();
+        // 1. Calculamos la onda de vaivén usando el tiempo musical del juego
+        float ondaSeno = Mathf.Sin((Time.time * velocidadOscilacion) + desfaseInicio);
 
-        if (playerDrive != null)
-        {
-            currentSpeed = playerDrive.roadScrollSpeed;
-        }
+        // 2. Modificamos únicamente la posición LOCAL en X
+        float nuevaXLocal = posicionInicialLocalX + (ondaSeno * amplitudMovimiento);
 
-        // Mover el obstáculo hacia atrás (hacia el carro)
-        transform.Translate(Vector3.back * currentSpeed * Time.deltaTime, Space.World);
-
-        // Si el obstáculo ya pasó de largo al coche, lo reciclamos al fondo en una posición X aleatoria
-        if (transform.position.z < despawnZPosition)
-        {
-            float randomX = Random.Range(minSpawnX, maxSpawnX);
-            transform.position = new Vector3(randomX, transform.position.y, resetZPosition);
-        }
+        // 3. Aplicamos manteniendo intactos Y y Z locales del tramo de pista
+        transform.localPosition = new Vector3(nuevaXLocal, transform.localPosition.y, transform.localPosition.z);
     }
 }

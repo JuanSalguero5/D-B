@@ -11,7 +11,7 @@ using UnityEngine.InputSystem;
 ///   - GameManager.Instance.currentState (GameState): Estado lógico del bucle de juego general.
 /// DATOS DE SALIDA: 
 ///   - isOverdriveActive (bool): Estado lógico global que notifica la activación del Overdrive.
-///   - drivingScript.roadScrollSpeed (float): Modificación directa de la velocidad de traslación del escenario.
+///   - TrackManager.Instance.roadScrollSpeed (float): Modificación directa de la velocidad de traslación del escenario encapsulado.
 /// PRECONDICIÓN: 
 ///   - El GameManager debe estar en un estado activo de juego (GameState.Playing).
 ///   - El Modo Overdrive no debe estar previamente activo (!isOverdriveActive).
@@ -21,17 +21,16 @@ public class PlayerRhythmBehavior : MonoBehaviour
     [Header("Configuración del Overdrive")]
     public float overdriveDuration = 3f;
     public bool isOverdriveActive = false;
+    public float speedMuliplier = 1.2f;
 
     [Header("New Input System (Explícito)")]
     public InputActionReference jumpActionReference;
 
     private float overdriveTimer = 0f;
-    public SimpleFluidDrive drivingScript;
 
     void Start()
     {
-        // Obtenemos el script de conducción que ya tiene el coche
-        drivingScript = GetComponent<SimpleFluidDrive>();
+        // Ya no necesitamos buscar SimpleFluidDrive en el inicio ya que la pista está desacoplada
     }
 
     private void OnEnable()
@@ -54,10 +53,6 @@ public class PlayerRhythmBehavior : MonoBehaviour
 
     /// <summary>
     /// NOMBRE DEL COMPORTAMIENTO: OnJumpPerformed (Procesador de Entrada de Teclado)
-    /// CASO DE USO: Capturar la interrupción física del teclado y evaluar las reglas de negocio de juego para activar el multiplicador.
-    /// DATOS DE ENTRADA: InputAction.CallbackContext context (Contexto del evento de input).
-    /// DATOS DE SALIDA: Invoca el método ActivateOverdrive() si se cumplen las condiciones lógicas.
-    /// PRECONDICIÓN: GameManager activo en Playing e inmunidad/estado previo inactivo.
     /// </summary>
     private void OnJumpPerformed(InputAction.CallbackContext context)
     {
@@ -94,9 +89,9 @@ public class PlayerRhythmBehavior : MonoBehaviour
 
     /// <summary>
     /// NOMBRE DEL COMPORTAMIENTO: ActivateOverdrive
-    /// CASO DE USO: Transicionar el motor de juego al estado de velocidad rítmica duplicada y alterar los componentes de renderizado.
-    /// DATOS DE ENTRADA: drivingScript.roadScrollSpeed original.
-    /// DATOS DE SALIDA: Modifica drivingScript.roadScrollSpeed multiplicándolo por 2.
+    /// CASO DE USO: Transicionar el motor de juego al estado de velocidad rítmica duplicada alterando el gestor de la pista.
+    /// DATOS DE ENTRADA: TrackManager.Instance.roadScrollSpeed original.
+    /// DATOS DE SALIDA: Modifica la velocidad del entorno multiplicándola por 2.
     /// PRECONDICIÓN: Evento de salto validado con éxito.
     /// </summary>
     private void ActivateOverdrive()
@@ -104,30 +99,32 @@ public class PlayerRhythmBehavior : MonoBehaviour
         isOverdriveActive = true;
         overdriveTimer = overdriveDuration;
 
-        if (drivingScript != null)
+        if (TrackManager.Instance != null)
         {
-            drivingScript.roadScrollSpeed *= 2f;
+            TrackManager.Instance.roadScrollSpeed *= speedMuliplier;
+            Debug.Log($"¡Modo Overdrive Rítmico Activado! Nueva velocidad: {TrackManager.Instance.roadScrollSpeed}");
         }
-
-        Debug.Log("¡Modo Overdrive Rítmico Activado!");
+        else
+        {
+            Debug.LogError("No se pudo activar el Overdrive porque no se encontró el TrackManager en la escena.");
+        }
     }
 
     /// <summary>
     /// NOMBRE DEL COMPORTAMIENTO: DeactivateOverdrive
-    /// CASO DE USO: Retornar las variables de traslación del escenario a sus coeficientes de fricción y velocidad base del juego.
+    /// CASO DE USO: Retornar las variables de traslación del escenario a sus coeficientes de velocidad base original.
     /// DATOS DE ENTRADA: Coeficiente de velocidad alterado.
-    /// DATOS DE SALIDA: Divide drivingScript.roadScrollSpeed entre 2.
+    /// DATOS DE SALIDA: Divide TrackManager.Instance.roadScrollSpeed entre 2.
     /// PRECONDICIÓN: El overdriveTimer llegó a cero (0f).
     /// </summary>
     private void DeactivateOverdrive()
     {
         isOverdriveActive = false;
 
-        if (drivingScript != null)
+        if (TrackManager.Instance != null)
         {
-            drivingScript.roadScrollSpeed /= 2f;
+            TrackManager.Instance.roadScrollSpeed /= speedMuliplier;
+            Debug.Log($"Overdrive Terminado. Velocidad restaurada a: {TrackManager.Instance.roadScrollSpeed}");
         }
-
-        Debug.Log("Overdrive Terminado.");
     }
 }

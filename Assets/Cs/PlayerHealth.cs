@@ -17,11 +17,12 @@ public class PlayerHealth : MonoBehaviour
     [Header("Configuración de Salud")]
     public int maxHealth = 100;
     public int currentHealth;
+    private DamageInvincibility invincibilityScript;
 
     void Start()
     {
-        // Inicializamos la salud al máximo al arrancar el nivel
         currentHealth = maxHealth;
+        invincibilityScript = GetComponent<DamageInvincibility>();
     }
 
     /// <summary>
@@ -33,18 +34,29 @@ public class PlayerHealth : MonoBehaviour
     /// </summary>
     public void TakeDamage(int damage)
     {
-        // Restamos el daño directamente a la salud actual
-        currentHealth -= damage;
+        // Ahora llamamos al método IsInvulnerable() con paréntesis
+        if (invincibilityScript != null && invincibilityScript.IsInvulnerable())
+        {
+            Debug.Log("🛡️ [INVULNERABLE] Impacto ignorado.");
+            return;
+        }
 
-        // Aseguramos que la vida no baje de cero
+        currentHealth -= damage;
         if (currentHealth < 0) currentHealth = 0;
 
         Debug.Log($"💥 [SALUD PLAYER] Daño recibido: {damage}. Salud restante: {currentHealth}");
 
-        // Si la vida llega a cero, ejecutamos la lógica de muerte
         if (currentHealth <= 0)
         {
             ManejarMuerte();
+        }
+        else
+        {
+            // Solo activamos si el script existe
+            if (invincibilityScript != null)
+            {
+                invincibilityScript.ActivarInvulnerabilidad();
+            }
         }
     }
 

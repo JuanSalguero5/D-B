@@ -31,14 +31,13 @@ public class ObstacleDamage : MonoBehaviour
             if (health != null)
             {
                 health.TakeDamage(damageAmount);
+                Debug.Log($"💥 [IMPACTO] El jugador recibió {damageAmount} de daño con un obstáculo rítmico.");
             }
 
-            // Reciclamos el obstáculo inmediatamente mandándolo detrás del umbral
-            DynamicObstacle dynamicScript = GetComponent<DynamicObstacle>();
-            if (dynamicScript != null)
-            {
-                transform.position = new Vector3(transform.position.x, transform.position.y, dynamicScript.despawnZPosition - 1f);
-            }
+            // CORRECCIÓN: En lugar de teletransportarlo usando una variable extinta, 
+            // simplemente apagamos el objeto para dar feedback de destrucción inmediata.
+            // Esto evita el bug del doble daño y se limpiará de la memoria con el tramo de pista.
+            gameObject.SetActive(false);
         }
     }
 }
