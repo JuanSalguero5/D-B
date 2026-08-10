@@ -11,6 +11,18 @@ public class RE_RhythmRing : MonoBehaviour
     [Tooltip("Arrastra aquí la malla 3D/anillo visual para apagarlo de forma exacta sin romper el texto")]
     public MeshRenderer mallaVisualAnilla;
 
+    private void Awake()
+    {
+        // El coche ya no lleva Rigidbody ni CharacterController (se mueve por transform + raycasts).
+        // Para que OnTriggerEnter se dispare igual, este trigger lleva un Rigidbody kinemático automático.
+        if (GetComponent<Rigidbody>() == null)
+        {
+            Rigidbody rb = gameObject.AddComponent<Rigidbody>();
+            rb.isKinematic = true;
+            rb.useGravity = false;
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (GameManager.Instance == null || GameManager.Instance.currentState != GameManager.GameState.Playing)

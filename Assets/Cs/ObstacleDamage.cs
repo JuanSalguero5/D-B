@@ -18,6 +18,18 @@ public class ObstacleDamage : MonoBehaviour
     [Header("Configuración de Daño")]
     public int damageAmount = 15;
 
+    private void Awake()
+    {
+        // El coche ya no lleva Rigidbody ni CharacterController (se mueve por transform + raycasts).
+        // Para que OnTriggerEnter se dispare igual, este trigger lleva un Rigidbody kinemático automático.
+        if (GetComponent<Rigidbody>() == null)
+        {
+            Rigidbody rb = gameObject.AddComponent<Rigidbody>();
+            rb.isKinematic = true;
+            rb.useGravity = false;
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (GameManager.Instance == null || GameManager.Instance.currentState != GameManager.GameState.Playing)
@@ -32,6 +44,18 @@ public class ObstacleDamage : MonoBehaviour
             {
                 health.TakeDamage(damageAmount);
                 Debug.Log($"💥 [IMPACTO] El jugador recibió {damageAmount} de daño con un obstáculo rítmico.");
+            }
+
+            // SACUDIDA DE CAMARA: cada impacto con un obstaculo mueve la camara
+            // (impulso de Cinemachine). Si el coche aun no tiene CameraShake, se auto-agrega.
+            CameraShake shake = other.GetComponentInParent<CameraShake>();
+            if (shake == null)
+            {
+                shake = other.gameObject.AddComponent<CameraShake>();
+            }
+            if (shake != null)
+            {
+                shake.Sacudir();
             }
 
             // CORRECCIÓN: En lugar de teletransportarlo usando una variable extinta, 

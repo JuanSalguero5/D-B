@@ -7,6 +7,18 @@ public class RhythmRamp : MonoBehaviour
     public float baseJumpForce = 12f;
     public float overdriveMultiplier = 1.5f;
 
+    private void Awake()
+    {
+        // El coche lleva un Rigidbody dinamico (fisica de la suspension).
+        // Para que OnTriggerEnter se dispare igual, este trigger lleva un Rigidbody kinemático automático.
+        if (GetComponent<Rigidbody>() == null)
+        {
+            Rigidbody rb = gameObject.AddComponent<Rigidbody>();
+            rb.isKinematic = true;
+            rb.useGravity = false;
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (GameManager.Instance == null || GameManager.Instance.currentState != GameManager.GameState.Playing)

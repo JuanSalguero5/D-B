@@ -6,10 +6,15 @@ public class AudioManager : MonoBehaviour
 
     [Header("Audio Sources")]
     public AudioSource musicSource;
+    public AudioSource sfxSource;
 
     [Header("Clips")]
     public AudioClip menuMusic;
     public AudioClip gameMusic;
+
+    [Header("Clips de Conteo Regresivo")]
+    public AudioClip readySound;
+    public AudioClip goSound;
 
     private void Awake()
     {
@@ -52,5 +57,23 @@ public class AudioManager : MonoBehaviour
     public void SetMusicVolume(bool isActive)
     {
         musicSource.mute = !isActive; // Mutea o desmutea
+    }
+
+    // --- SONIDOS DEL CONTEO REGRESIVO (Ready / Go) ---
+
+    public void PlayReadySound()
+    {
+        if (sfxSource != null && readySound != null)
+        {
+            sfxSource.PlayOneShot(readySound);
+        }
+    }
+
+    public void PlayGoSound()
+    {
+        if (sfxSource != null && goSound != null)
+        {
+            sfxSource.PlayOneShot(goSound);
+        }
     }
 }

@@ -1,0 +1,155 @@
+========================================================
+INSTRUCCIONES PARA GENERAR EL DOCUMENTO DE PRUEBAS (SENA)
+========================================================
+
+EVIDENCIA: GA9-220501090-AA1-EV01
+CURSO: Tecnólogo en Desarrollo de Videojuegos - SENA
+ENTREGABLE: Informe "Diseño del plan de pruebas de la funcionalidad del videojuego"
+
+Genera un documento WORD (.docx) profesional que cumpla con la evidencia
+GA9-220501090-AA1-EV01 del SENA sobre el plan de pruebas de un videojuego.
+
+--------------------------------------------------------
+CONTEXTO DEL VIDEOJUEGO
+--------------------------------------------------------
+Nombre: D&B
+Tipo: Juego de conducción arcade con mecánicas rítmicas (rhythm game)
+Motor: Unity 6, Render Pipeline Universal (URP)
+Plataformas objetivo: PC y Mobile
+Autor: Juan Salguero
+
+MECÁNICAS PRINCIPALES:
+- Conducción de un vehículo (Mitsubishi) por una pista proceduralmente infinita
+  usando CharacterController (SimpleFluidDrive.cs).
+- Generación procedural y reciclaje de tramos de pista (TrackManager.cs).
+- Esquivar obstáculos que se desplazan hacia el jugador (DynamicObstacle.cs,
+  ObstacleDamage.cs). Cada impacto resta 15 de salud.
+- Salud del jugador 100 puntos; al llegar a 0 el juego pasa a GameOver
+  (PlayerHealth.cs).
+- Rampas que impulsan al jugador verticalmente (RhythmRamp.cs); el salto se
+  potencia 1.5x si el modo Overdrive está activo.
+- Anillas rítmicas que al recolectarse aumentan el combo; cada 3 anillas el
+  multiplicador de puntaje sube 1 nivel (máximo 10x). Si una anilla se pierde,
+  el combo se resetea (RE_RhythmRing.cs).
+- Modo Overdrive: al presionar la tecla rítmica (Espacio) se duplica la
+  velocidad de la pista durante 3 segundos (PlayerRhythmBehavior.cs).
+- Puntaje acumulativo en tiempo real (25 pts/segundo * multiplicador).
+- Estados del juego: MainMenu, Playing, Paused, GameOver (GameManager.cs,
+  patrón Singleton).
+- Cámara con seguimiento suave (SmoothFollowCamera.cs) y FOV dinámico según la
+  velocidad (CameraSpeedEffects.cs).
+- IA enemiga que esquivа obstáculos usando Physics.BoxCast
+  (IA_EnemyRacer.cs); cambia a estado "Aggressive" cuando el jugador activa
+  Overdrive.
+- HUD con TextMeshPro (puntaje, combo/multiplicador).
+- Guardado de progreso con PlayerPrefs (Salir y Guardar).
+- Pruebas unitarias con Unity Test Framework (RhythmGameTests.cs).
+
+ESCENAS Y ASSETS PRINCIPALES:
+- Assets/Cs/*.cs (13 scripts)
+- Assets/3D/Player/Player.fbx + texturas PNG (WHEEL_RIGHT, brake, fire, light,
+  mirror, mitsubishi, wheel, windows, exhaust_pipe)
+- Assets/Materiales/*.mat
+- Assets/Settings/PC_RPAsset.asset y Mobile_RPAsset.asset (URP)
+- Assets/TextMesh Pro (LiberationSans SDF)
+- Assets/Tests/RhythmGameTests.cs
+- Assets/Scenes/FirstScene.unity
+
+--------------------------------------------------------
+ESTRUCTURA OBLIGATORIA DEL DOCUMENTO (en este orden)
+--------------------------------------------------------
+1. PORTADA
+   - Servicio Nacional de Aprendizaje (SENA)
+   - Código de evidencia GA9-220501090-AA1-EV01
+   - Título: "Diseño del plan de pruebas de la funcionalidad del videojuego"
+   - Nombre del juego, autor, fecha y plataforma
+
+2. INTRODUCCIÓN
+   - Presentar el juego y el propósito del documento
+   - Contexto del testing: el testing busca dar más información para reducir
+     la incertidumbre y controlar riesgos (referencia a Federico Toledo, 2020)
+
+3. PROPÓSITO DEL TESTING
+   - Objetivos específicos: verificar mecánicas, validar estados del juego,
+     analizar rendimiento con el Profiler, clasificar consumo de recursos,
+     establecer métricas objetivas
+
+4. TIPO DE MÉTRICAS Y EN QUÉ SE APLICAN
+   (Basado en el artículo de Federico Toledo "Métricas de testing" de 2020)
+   Incluir y aplicar al juego:
+   - Métricas de cobertura (top-down por módulos: jugador, pista, obstáculos,
+     rampas, anillas, IA enemiga, interfaz)
+   - Métricas de calidad de código (scripts de Assets/Cs, deuda técnica)
+   - Métricas de bugs o issues (clasificados por severidad)
+   - Métricas de casos de prueba (agrupados por criticidad, método MoSCoW)
+   - Métricas de testing exploratorio (game feel, sesiones)
+   - Métricas de automatización de pruebas (Test Runner / pruebas unitarias)
+   - Métricas de performance (tiempo de CPU/GPU, draw calls, memoria, FPS)
+
+5. ANÁLISIS DEL PROFILER (Unity)
+   Analizar los módulos del Profiler de Unity:
+   - CPU Usage: tiempo de los métodos Update() de GameManager,
+     SimpleFluidDrive, TrackManager, IA_EnemyRacer
+   - Rendering (GPU): draw calls del vehículo (Player.fbx con múltiples
+     materiales), batcheo URP
+   - Memory: texturas PNG del vehículo, atlas SDF de TextMeshPro,
+     GC Alloc por Instantiate/Destroy de tramos de pista
+   - Physics: CharacterController y Physics.BoxCast por frame
+   - Scripts y Animation: animaciones procedurales (ruedas, FOV), bajo uso
+     del módulo Animation
+
+6. CONSUMO DE RECURSOS
+   Clasificar los elementos por categoría con su nivel de consumo:
+   - Imágenes: texturas del vehículo (medio-alto), atlas SDF
+   - Audios: no hay clips aún (bajo); recomendar AudioSource Pooling
+   - Animaciones: procedurales (bajo)
+   - Mallas: Player.fbx y prefabs de pista (medio)
+   - Scripts: Update() por frame (alto - mayor consumidor)
+   - Físicas: CharacterController y BoxCast (medio)
+
+7. RIESGOS Y CONSIDERACIONES
+   - GC Alloc por Instantiate/Destroy (pooling como mitigación)
+   - Alto número de draw calls por materiales múltiples (atlas de texturas)
+   - BoxCast por frame en IA (limitar frecuencia)
+   - TextMeshPro actualizado cada frame (actualizar solo al cambiar)
+   - Time.timeScale = 0 en Paused/GameOver (usar unscaledDeltaTime para UI)
+   - GameManager Singleton sin DontDestroyOnLoad
+   - Diferencias PC vs Mobile (dos perfiles URP)
+
+8. CONCLUSIONES
+   - Resumir hallazgos y recomendaciones
+
+9. REFERENCIAS BIBLIOGRÁFICAS
+   - Toledo, F. (2020). Métricas de testing. https://www.federico-toledo.com/metricas-de-testing/
+   - Documentación oficial de Unity (Profiler, URP, Test Framework,
+     CharacterController, Physics.BoxCast)
+
+--------------------------------------------------------
+FUENTES DE CONSULTA INDICADAS EN LA EVIDENCIA
+--------------------------------------------------------
+- Leer la información de métricas en:
+  https://www.federico-toledo.com/metricas-de-testing/
+- Identificar cuáles métricas se ajustan al plan de pruebas.
+- Identificar los principales elementos para analizar el Profiler de Unity 3D.
+- Determinar cuáles elementos del Profiler generan mayor consumo y
+  clasificarlos en: imágenes, audios, animaciones, mesh, scripts y físicos.
+
+--------------------------------------------------------
+REQUISITOS DE FORMATO
+--------------------------------------------------------
+- Extensión .docx
+- Portada con los datos institucionales del SENA
+- Estructura con encabezados numerados (1., 2., 3., ...)
+- Uso de viñetas/listas para los puntos
+- Escritura en español correcto con tildes y ñ (puedes escribirlo tú al
+  generar, la información de este archivo es solo el contexto)
+- Extensión recomendada: 5-8 páginas
+
+--------------------------------------------------------
+NOTA PARA LA IA GENERADORA
+--------------------------------------------------------
+Genera el documento COMPLETO, listo para entregar, con contenido real y
+profesional basado en el contexto del juego D&B descrito arriba. No inventes
+datos de rendimiento numéricos específicos del Profiler si no fueron medidos;
+en su lugar usa análisis cualitativo y recomendaciones. Adapta el texto a la
+evidencia GA9-220501090-AA1-EV01.

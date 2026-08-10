@@ -40,6 +40,12 @@ public class GameManager : MonoBehaviour
     public int currentComboCount = 0;
     public int scoreMultiplier = 1;
 
+    [Header("Conteo Regresivo (Ready / Go)")]
+    public TextMeshProUGUI countdownText;
+    public float readyDuration = 1f;
+    public float goDuration = 0.7f;
+    private Coroutine countdownCoroutine;
+
     [Header("Configuración de Combo")]
     public float tiempoMaximoParaCombo = 2.0f; // Tiempo en segundos para perder el combo
     private float tiempoRestanteCombo = 0f;
@@ -215,6 +221,60 @@ public class GameManager : MonoBehaviour
             playerVehicle.transform.position = new Vector3(0f, playerVehicle.transform.position.y, playerVehicle.transform.position.z);
         }
 
+        // En lugar de pasar directo a Playing, ejecutamos el conteo Ready / Go
+        IniciarConteoRegresivo();
+    }
+
+    /// <summary>
+    /// NOMBRE DEL COMPORTAMIENTO: IniciarConteoRegresivo
+    /// CASO DE USO: Prepara el HUD y arranca la corrutina que muestra "READY" y luego "GO!"
+    ///              con su sonido respectivo antes de que la partida entre en estado Playing.
+    /// </summary>
+    public void IniciarConteoRegresivo()
+    {
+        // Encendemos el HUD sin entrar aún en Playing (el mundo queda congelado por la lógica de estados)
+        if (mainMenuPanel != null) mainMenuPanel.SetActive(false);
+        if (hudPanel != null) hudPanel.SetActive(true);
+        if (pauseMenuPanel != null) pauseMenuPanel.SetActive(false);
+        if (gameOverPanel != null) gameOverPanel.SetActive(false);
+
+        if (countdownCoroutine != null) StopCoroutine(countdownCoroutine);
+        countdownCoroutine = StartCoroutine(ConteoRegresivoRoutine());
+    }
+
+    private System.Collections.IEnumerator ConteoRegresivoRoutine()
+    {
+        // --- FASE READY ---
+        if (countdownText != null)
+        {
+            countdownText.gameObject.SetActive(true);
+            countdownText.text = "READY";
+            countdownText.color = Color.white;
+        }
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayReadySound();
+        }
+
+        yield return new WaitForSecondsRealtime(readyDuration);
+
+        // --- FASE GO! ---
+        if (countdownText != null)
+        {
+            countdownText.text = "GO!";
+            countdownText.color = Color.green;
+        }
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayGoSound();
+        }
+
+        yield return new WaitForSecondsRealtime(goDuration);
+
+        // --- FIN DEL CONTEO: ocultamos el texto y arrancamos la partida ---
+        if (countdownText != null) countdownText.gameObject.SetActive(false);
+
+        countdownCoroutine = null;
         ChangeState(GameState.Playing);
     }
 
