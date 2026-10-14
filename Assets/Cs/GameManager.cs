@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.SceneManagement; // Requerido para reiniciar la escena limpiamente
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// NOMBRE DEL COMPORTAMIENTO: GameManager (Administrador del Ciclo de Vida y Estados del Juego)
