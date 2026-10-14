@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-3595779123097366526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edb250ac097f481fa89c38a1e224b773, type: 3}
+  m_Name: FlatKitPixelation
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::FlatKit.FlatKitPixelation
+  m_Active: 1
+  settings: {fileID: 11400000, guid: 5993cfb9c06281040a42a064f958c2c9, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27,7 +41,8 @@ MonoBehaviour:
   m_RendererFeatures:
   - {fileID: 7833122117494664109}
   - {fileID: 856122381476824301}
-  m_RendererFeatureMap: ad6b866f10d7b46ced043020c58ee10b
+  - {fileID: -3595779123097366526}
+  m_RendererFeatureMap: ad6b866f10d7b46ced043020c58ee10b02100455f03919ce
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}

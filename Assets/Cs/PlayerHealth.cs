@@ -14,6 +14,12 @@
 /// </summary>
 public class PlayerHealth : MonoBehaviour
 {
+    /// <summary>
+    /// Se dispara cada vez que se resta vida de verdad (no cuando hay invulnerabilidad).
+    /// Recibe la cantidad de daño aplicada. Lo usan los efectos de UI (flash de daño, etc).
+    /// </summary>
+    public event System.Action<int> OnDamageReceived;
+
     [Header("Configuración de Salud")]
     public int maxHealth = 100;
     public int currentHealth;
@@ -45,6 +51,13 @@ public class PlayerHealth : MonoBehaviour
         if (currentHealth < 0) currentHealth = 0;
 
         Debug.Log($"💥 [SALUD PLAYER] Daño recibido: {damage}. Salud restante: {currentHealth}");
+
+        // Avisar a los efectos (UI, etc.) que se recibió daño real.
+        OnDamageReceived?.Invoke(damage);
+
+        // Sonido de impacto.
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayDamageSound();
 
         if (currentHealth <= 0)
         {

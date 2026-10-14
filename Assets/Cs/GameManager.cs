@@ -167,14 +167,17 @@ public class GameManager : MonoBehaviour
             {
                 AudioManager.Instance.ResumeMusic(); // Usa el nuevo método
                 AudioManager.Instance.PlayGameMusic();
+                AudioManager.Instance.PlayEngineSound(); // Motor del coche
             }
             else if (newState == GameState.Paused || newState == GameState.GameOver)
             {
                 AudioManager.Instance.SetMusicVolume(false);
+                AudioManager.Instance.StopEngineSound(); // El coche se detiene
             }
             else if (newState == GameState.MainMenu)
             {
                 AudioManager.Instance.PlayMenuMusic();
+                AudioManager.Instance.StopEngineSound();
             }
         }
 

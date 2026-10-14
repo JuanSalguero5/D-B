@@ -4,51 +4,72 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CharacterController))]
 public class SimpleFluidDrive : MonoBehaviour
 {
-    [Header("ConducciÛn de Auto Real")]
-    [Tooltip("Velocidad de avance simulado (afecta quÈ tan r·pido giran las llantas y reacciona el auto)")]
+    [Header("ConducciÔøΩn de Auto Real")]
+    [Tooltip("Velocidad de avance simulado (afecta quÔøΩ tan rÔøΩpido giran las llantas y reacciona el auto)")]
     public float forwardSpeed = 30f;
     [Tooltip("Velocidad de respuesta del volante al girar la trompa")]
     public float turnSpeed = 45f;
 
-    [Header("¡ngulos de Maniobra (Game Feel)")]
-    [Tooltip("InclinaciÛn lateral visual de las llantas delanteras (Eje Z) por transferencia de peso")]
+    [Header("ÔøΩngulos de Maniobra (Game Feel)")]
+    [Tooltip("InclinaciÔøΩn lateral visual de las llantas delanteras (Eje Z) por transferencia de peso")]
     public float rotationLean = 5f;
     [Tooltip("Velocidad con la que el chasis se estabiliza")]
     public float rotationSmoothSpeed = 12f;
 
-    [Header("AnimaciÛn Procedural de Salto (Pitch)")]
-    [Tooltip("¡ngulo m·ximo que se inclina la trompa hacia arriba/abajo al saltar")]
+    [Header("AnimaciÔøΩn Procedural de Salto (Pitch)")]
+    [Tooltip("ÔøΩngulo mÔøΩximo que se inclina la trompa hacia arriba/abajo al saltar")]
     public float maxJumpLeanAngle = 15f;
-    [Tooltip("Velocidad de suavizado para la rotaciÛn de salto")]
+    [Tooltip("Velocidad de suavizado para la rotaciÔøΩn de salto")]
     public float leanSmoothSpeed = 8f;
-    [Tooltip("Arrastra aquÌ el modelo visual (hijo) del coche si quieres inclinar solo la malla. Si se deja vacÌo, se aplica a la raÌz.")]
+    [Tooltip("Arrastra aquÔøΩ el modelo visual (hijo) del coche si quieres inclinar solo la malla. Si se deja vacÔøΩo, se aplica a la raÔøΩz.")]
     public Transform modeloVisualCoche;
 
-    [Header("AnimaciÛn de Ruedas")]
+    [Header("AnimaciÔøΩn de Ruedas")]
     public Transform[] frontWheels;
     public Transform[] allWheels;
     public float maxSteerAngle = 25f;
     public float wheelSpinSpeed = 200f;
 
-    [Header("New Input System (ExplÌcito)")]
+    [Header("New Input System (ExplÔøΩcito)")]
     public InputActionReference moveActionReference;
 
-    [Header("FÌsicas de Character Controller")]
+    [Header("FÔøΩsicas de Character Controller")]
     private CharacterController controller;
     private float verticalVelocity;
     private float gravity = 25f;
 
     private float horizontalInput;
-    private float currentYawAngle = 0f; // Guarda la rotaciÛn real de la trompa
+    public float HorizontalInput => horizontalInput; // Para efectos (part√≠culas de giro)
+    private float currentYawAngle = 0f; // Guarda la rotaciÔøΩn real de la trompa
 
     [Header("Ajustes Avanzados de Ruedas")]
     public float direccionGiroAvance = 1f;
     private float currentRotationX = 0f;
 
+    [Header("Rebote contra Paredes (Tag Bounce)")]
+    [Tooltip("Velocidad lateral con la que el coche rebota alej√°ndose de la pared")]
+    public float bounceVelocidad = 8f;
+    [Tooltip("Impulso vertical del rebote (peque√±o salto contra el muro)")]
+    public float bounceImpulsoVertical = 4f;
+    [Tooltip("Duraci√≥n en segundos en la que el jugador pierde el control del coche")]
+    public float tiempoPerderControl = 0.8f;
+    [Tooltip("Velocidad de giro sin control durante el rebote (grados por segundo)")]
+    public float velocidadSpin = 540f;
+    [Tooltip("Qu√© tan r√°pido frena el impulso lateral del rebote")]
+    public float deceleracionRebote = 30f;
+
+    private bool perdiendoControl = false;
+    private float controlTimer = 0f;
+    private float spinDirection = 1f;
+    private float bounceVelocidadLateral = 0f;
+
     void Start()
     {
         controller = GetComponent<CharacterController>();
         currentYawAngle = transform.localEulerAngles.y;
+        perdiendoControl = false;
+        controlTimer = 0f;
+        bounceVelocidadLateral = 0f;
     }
 
     private void OnEnable()
@@ -75,16 +96,29 @@ public class SimpleFluidDrive : MonoBehaviour
             horizontalInput = inputVector.x;
         }
 
-        // 1. ROTACI”N DE LA TROMPA (Eje Y)
-        currentYawAngle += horizontalInput * turnSpeed * Time.deltaTime;
-
-        if (horizontalInput == 0f)
+        // 1. ROTACIÔøΩN DE LA TROMPA (Eje Y)
+        if (perdiendoControl)
         {
-            currentYawAngle = Mathf.MoveTowardsAngle(currentYawAngle, 0f, turnSpeed * 1.5f * Time.deltaTime);
+            // Durante el rebote la trompa gira sin control del jugador
+            currentYawAngle += spinDirection * velocidadSpin * Time.deltaTime;
+            controlTimer -= Time.deltaTime;
+            if (controlTimer <= 0f)
+            {
+                perdiendoControl = false;
+            }
         }
-        currentYawAngle = Mathf.Clamp(currentYawAngle, -30f, 30f);
+        else
+        {
+            currentYawAngle += horizontalInput * turnSpeed * Time.deltaTime;
 
-        // 2. C¡LCULO DEL MOVIMIENTO VECTORIAL (Hacia donde mira la trompa)
+            if (horizontalInput == 0f)
+            {
+                currentYawAngle = Mathf.MoveTowardsAngle(currentYawAngle, 0f, turnSpeed * 1.5f * Time.deltaTime);
+            }
+            currentYawAngle = Mathf.Clamp(currentYawAngle, -30f, 30f);
+        }
+
+        // 2. CÔøΩLCULO DEL MOVIMIENTO VECTORIAL (Hacia donde mira la trompa)
         Vector3 forwardMovement = transform.forward * forwardSpeed;
 
         // Procesar gravedad
@@ -97,14 +131,24 @@ public class SimpleFluidDrive : MonoBehaviour
             verticalVelocity = -1f;
         }
 
-        // Mover el Character Controller plano en base a la direcciÛn frontal
-        Vector3 finalVelocity = new Vector3(forwardMovement.x, verticalVelocity, 0f);
+        // Mover el Character Controller plano en base a la direcciÔøΩn frontal
+        Vector3 finalVelocity;
+        if (perdiendoControl)
+        {
+            // El coche rebota lateralmente alej√°ndose de la pared y frena poco a poco
+            bounceVelocidadLateral = Mathf.MoveTowards(bounceVelocidadLateral, 0f, deceleracionRebote * Time.deltaTime);
+            finalVelocity = new Vector3(bounceVelocidadLateral, verticalVelocity, 0f);
+        }
+        else
+        {
+            finalVelocity = new Vector3(forwardMovement.x, verticalVelocity, 0f);
+        }
         controller.Move(finalVelocity * Time.deltaTime);
 
-        // 3. ANIMACI”N DE ROTACI”N PROCEDURAL (YAW Y PITCH DE SALTO)
+        // 3. ANIMACIÔøΩN DE ROTACIÔøΩN PROCEDURAL (YAW Y PITCH DE SALTO)
         CalcularInclinacionYRotacion();
 
-        // 4. AnimaciÛn Visual de las Ruedas
+        // 4. AnimaciÔøΩn Visual de las Ruedas
         AnimarRuedas();
     }
 
@@ -112,7 +156,7 @@ public class SimpleFluidDrive : MonoBehaviour
     {
         float targetPitchAngle = 0f;
 
-        // Si no est· tocando el suelo, calculamos el ·ngulo de cabeceo (Pitch) seg˙n el vector de caÌda/subida
+        // Si no estÔøΩ tocando el suelo, calculamos el ÔøΩngulo de cabeceo (Pitch) segÔøΩn el vector de caÔøΩda/subida
         if (!controller.isGrounded)
         {
             float ratioVelocidad = verticalVelocity / 15f;
@@ -120,7 +164,7 @@ public class SimpleFluidDrive : MonoBehaviour
             targetPitchAngle = Mathf.Clamp(targetPitchAngle, -maxJumpLeanAngle, maxJumpLeanAngle);
         }
 
-        // Si tienes asignada la malla por separado, rotamos localmente el hijo en X (Salto), y la raÌz en Y (Giro)
+        // Si tienes asignada la malla por separado, rotamos localmente el hijo en X (Salto), y la raÔøΩz en Y (Giro)
         if (modeloVisualCoche != null)
         {
             Quaternion targetJumpRot = Quaternion.Euler(targetPitchAngle, 0f, 0f);
@@ -130,7 +174,7 @@ public class SimpleFluidDrive : MonoBehaviour
         }
         else
         {
-            // CombinaciÛn directa en el objeto raÌz para evitar volcar el CharacterController de forma fÌsica
+            // CombinaciÔøΩn directa en el objeto raÔøΩz para evitar volcar el CharacterController de forma fÔøΩsica
             Quaternion targetTotalRot = Quaternion.Euler(targetPitchAngle, currentYawAngle, 0f);
             transform.localRotation = Quaternion.Lerp(transform.localRotation, targetTotalRot, Time.deltaTime * leanSmoothSpeed);
         }
@@ -144,10 +188,10 @@ public class SimpleFluidDrive : MonoBehaviour
         currentRotationX += currentScrollSpeed * wheelSpinSpeed * direccionGiroAvance * Time.deltaTime;
         currentRotationX %= 360f;
 
-        // 2. ¡ngulo del volante (Eje Y)
+        // 2. ÔøΩngulo del volante (Eje Y)
         float targetSteer = horizontalInput * maxSteerAngle;
 
-        // RUEDAS DELANTERAS: Solo manejan Avance (X) y DirecciÛn (Y). Z se congela en 0 estricto.
+        // RUEDAS DELANTERAS: Solo manejan Avance (X) y DirecciÔøΩn (Y). Z se congela en 0 estricto.
         foreach (Transform frontWheel in frontWheels)
         {
             if (frontWheel != null)
@@ -173,5 +217,40 @@ public class SimpleFluidDrive : MonoBehaviour
     public void EjecutarSaltoRampa(float fuerzaSalto)
     {
         verticalVelocity = fuerzaSalto;
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (GameManager.Instance == null || GameManager.Instance.currentState != GameManager.GameState.Playing)
+            return;
+
+        if (perdiendoControl) return;
+
+        if (hit.collider != null && hit.collider.CompareTag("Bounce"))
+        {
+            // Direcci√≥n que aleja el coche de la pared (normal del contacto)
+            float direccion;
+            if (hit.normal.x != 0f)
+            {
+                direccion = Mathf.Sign(hit.normal.x);
+            }
+            else
+            {
+                direccion = transform.position.x >= 0f ? -1f : 1f;
+            }
+
+            bounceVelocidadLateral = direccion * bounceVelocidad;
+            verticalVelocity = bounceImpulsoVertical;
+            spinDirection = Random.value < 0.5f ? 1f : -1f;
+            controlTimer = tiempoPerderControl;
+            perdiendoControl = true;
+
+            // Sacudida de c√°mara por el impacto contra el muro
+            CameraShake shake = GetComponentInParent<CameraShake>();
+            if (shake == null) shake = gameObject.AddComponent<CameraShake>();
+            if (shake != null) shake.Sacudir();
+
+            Debug.Log("BANG! [REBOTE] Chocaste contra el muro Bounce. Perdiste el control del coche.");
+        }
     }
 }

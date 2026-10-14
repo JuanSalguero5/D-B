@@ -3,7 +3,7 @@ using System.Collections.Generic; // Necesario para la lista
 
 public class DamageInvincibility : MonoBehaviour
 {
-    [Header("Configuración Dither")]
+    [Header("Configuraciï¿½n Dither")]
     public float invincibilityDuration = 2.0f;
     public float ditherSpeed = 20f;
 
@@ -14,16 +14,30 @@ public class DamageInvincibility : MonoBehaviour
 
     void Start()
     {
+        // IMPORTANTE: limpiamos la lista serializada. Si quedaron referencias a los
+        // ASSETS .mat (tipo 2), SetFloat() escribiria el dither sobre el material
+        // compartido en disco y la siguiente partida arrancaria con las ruedas "quemadas".
+        // Aqui solo usamos instancias de runtime: cada renderer obtiene la suya con
+        // r.material y no toca el asset.
+        materialesEfecto.Clear();
+
         // Buscamos TODOS los MeshRenderers en este objeto y sus hijos
         Renderer[] renderers = GetComponentsInChildren<Renderer>();
 
         foreach (Renderer r in renderers)
         {
-            // Solo guardamos el material si tiene nuestro parámetro del Shader
+            // Solo guardamos el material si tiene nuestro parï¿½metro del Shader
             if (r.material.HasProperty("_AlphaThreshold"))
             {
                 materialesEfecto.Add(r.material);
             }
+        }
+
+        // Reset explï¿½cito al iniciar cada partida: si un .mat quedo "quemado" con el
+        // valor del dither de una sesiï¿½n anterior, lo limpiamos de una vez.
+        foreach (Material mat in materialesEfecto)
+        {
+            mat.SetFloat("_AlphaThreshold", 0f);
         }
     }
 

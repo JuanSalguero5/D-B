@@ -23,15 +23,29 @@ public class CameraShake : MonoBehaviour
     {
         // 1. Fuente de impulso sobre este objeto (el coche), cerca de la camara.
         impulso = GetComponent<CinemachineImpulseSource>();
-        if (impulso == null)
+        bool laCreamos = impulso == null;
+        if (laCreamos)
         {
             impulso = gameObject.AddComponent<CinemachineImpulseSource>();
         }
 
-        // Bump = golpe corto y seco (mejor que el Custom por defecto).
         CinemachineImpulseDefinition def = impulso.ImpulseDefinition;
-        def.ImpulseShape = CinemachineImpulseDefinition.ImpulseShapes.Bump;
-        def.ImpulseDuration = 0.15f;
+        if (laCreamos)
+        {
+            // Se creo por codigo (no se ejecuta Reset), ponemos unos defaults.
+            def.ImpulseType = CinemachineImpulseDefinition.ImpulseTypes.Uniform;
+            def.ImpulseChannel = 1; // mismo canal que los listeners
+            def.ImpulseShape = CinemachineImpulseDefinition.ImpulseShapes.Bump;
+            def.ImpulseDuration = 0.15f;
+        }
+        else
+        {
+            // Ya existe en el Inspector: respetamos los ajustes del usuario.
+            // Unica excepcion: si quedo en Legacy, el impulso NO se emite (exige
+            // un RawSignal de ruido). Lo pasamos a Uniform para que no falle en silencio.
+            if (def.ImpulseType == CinemachineImpulseDefinition.ImpulseTypes.Legacy)
+                def.ImpulseType = CinemachineImpulseDefinition.ImpulseTypes.Uniform;
+        }
 
         // 2. Asegurar que las virtual cameras escuchen el impulso (canal 1, gain 1).
         CinemachineCamera[] camaras = FindObjectsByType<CinemachineCamera>(FindObjectsSortMode.None);
